@@ -7,18 +7,22 @@ This app is built with [cra](https://reactjs.org/docs/create-a-new-react-app.htm
 in order make use of the cardano-serialization wasm library.
 
 ````text
-+-----------+           1.sends input                 +---------------------------+
-|game client+---------------------------------------->|                           |
-+-----------+                                         |141x-game-authorizer-server|
-                                                      |                           |
-                                                      |       +-------------------+
-                                                      |       |  4.verifies       |
-+--------------------+     2.asks for signature       |       |   and updated     |
-|141x-game-authorizer|<-------------------------------+       |   game state      |
-+----------------+---+                                +-------+-----+-------------+
-                 |                                                  |
-                 +--------------------------------------------------+
-                               3.provides signature
++-------------+
+|             |           1.sends input                +-----------------------------+
+| game client +--------------------------------------> |                             |
+|             |                                        | 141x-game-authorizer-server |
++-------------+                                        |                             |
+                                                       |        +--------------------+
++----------------------+                               |        |                    |
+|                      |     2.asks for signature      |        |                    |
+| 141x-game-authorizer | <-----------------------------+        |                    |
+|                      |                               |        |   4.verifies       |
+|                      |                               |        |    and updated     |
++------------------+---+                               |        |    game state      |
+                   |                                   |        |                    |
+                   +---------------------------------> |        |                    |
+                           3.provides signature        |        |                    |
+                                                       +--------+--------------------+
 ````
 1
 ## Getting started
