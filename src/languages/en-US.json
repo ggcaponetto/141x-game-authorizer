@@ -1,0 +1,31 @@
+{
+    "utilities": {
+        "title": "Manual Signing and Verification",
+        "sign": "Message Signing",
+        "sign-message": "Message to sign",
+        "sign-signature": "Generated message signature",
+        "verify": "Message Verification",
+        "verify-address": "Address that signed the message",
+        "verify-message": "Message that has been signed",
+        "verify-signature": "Signature of the message",
+        "your-are-signign-with-address": "You are signign the message with",
+        "on-the": "on the"
+    },
+    "home": {
+        "title": "141x: Cardano Game Authorizer",
+        "seed": "Account Seed",
+        "new-game-account": "New Account",
+        "accordion-title-seed": "Seed",
+        "delete-account": "Delete Account",
+        "accordion-title-address": "Address",
+        "delete-address": "Delete Address",
+        "unused-address": "Unused Address"
+    },
+    "settings": {
+        "reset-server": "Reset",
+        "reset-app-id": "Reset",
+        "reset": "Reset",
+        "blockfrost-mainnet": "blockfrost mainnet apikey",
+        "blockfrost-testnet": "blockfrost testnet apikey"
+    }
+}
