@@ -239,7 +239,7 @@ export default function Wallet(CardanoWasm, BIP39){
     try {
       let sampleMessage = JSON.stringify({
         headers: {
-          "app-id": "the-hoskyverse",
+          "app-id": "the-meta",
           "address": "some-address"
         },
         payload: {

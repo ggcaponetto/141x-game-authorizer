@@ -124,7 +124,7 @@ describe('Wallet', function() {
         // message signing
         let message = JSON.stringify({
           headers: {
-            "app-id": "the-hoskyverse"
+            "app-id": "the-meta"
           },
           payload: {
             some: "property"
@@ -146,7 +146,7 @@ describe('Wallet', function() {
         // message signing
         let message = JSON.stringify({
           headers: {
-            "app-id": "the-hoskyverse"
+            "app-id": "the-meta"
           },
           payload: {
             some: "property"
@@ -168,7 +168,7 @@ describe('Wallet', function() {
         // message signing
         let message = JSON.stringify({
           headers: {
-            "app-id": "the-hoskyverse"
+            "app-id": "the-meta"
           },
           payload: {
             some: "property"
@@ -177,7 +177,7 @@ describe('Wallet', function() {
         let seedKeys = Object.keys(mockAccounts[network]);
         let derivationIndexKeys =  Object.keys(mockAccounts[network][seedKeys[0]]);
         let address = mockAccounts[network][`${seedKeys[0]}`][derivationIndexKeys[0]].public.base_address_bech32;
-        chai.expect(()=>{wallet.safeSign(network, message, address, "the-hoskyverse")}).to.not.throw();
+        chai.expect(()=>{wallet.safeSign(network, message, address, "the-meta")}).to.not.throw();
       })
     });
   });

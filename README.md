@@ -25,7 +25,7 @@ in order make use of the cardano-serialization wasm library.
                            3.provides signature        |        |                    |
                                                        +--------+--------------------+
 ````
-An example game client is [https://hoskyverse.141x.io](https://hoskyverse.141x.io)
+An example game client is [https://meta.141x.io](https://meta.141x.io)
 ## Getting started
 1. ``git clone git@github.com:ggcaponetto/141x-game-authorizer.git``
 1. ``npm i && npm start``
