@@ -130,7 +130,7 @@ function AddressInfo(props){
       }
       update(props.address);
     }
-  }, [props.address, context.settings])
+  }, [context.settings, props.address])
   return (
     <div>
       {(()=>{
