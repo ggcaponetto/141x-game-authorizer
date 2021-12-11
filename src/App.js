@@ -28,6 +28,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import packageJson from "./../package.json";
 import { Settings, SettingsLoader } from './components/settings/Settings'
 import { Storage } from "./components/storage/Storage";
+import { getBlockfrostFromContext } from "./components/util/util";
 
 const ll = loglevel.getLogger('main');
 let CardanoWasm = null;
@@ -123,14 +124,14 @@ function AddressInfo(props){
           method: 'get',
           url: `https://cardano-${context.settings.network}.blockfrost.io/api/v0/addresses/${address}`,
           headers: {
-            "project_id": `${context.settings.blockfrost.apikey.mainnet}`
+            "project_id": `${getBlockfrostFromContext(context).apikey[`${context.settings.network}`]}`
           }
         }).catch(e => e);
         setRes(res);
       }
       update(props.address);
     }
-  }, [context.settings, props.address])
+  }, [context, context.settings, props.address])
   return (
     <div>
       {(()=>{
@@ -204,6 +205,7 @@ function Accounts() {
               if(context.settings && context.settings.network){
                 return (
                   <Button onClick={() => {
+                    ll.debug(`creating account/addresses on ${context.settings.network}`, {});
                     let newAddresses = wallet.current.createAddresses({
                       network: context.settings.network,
                       quantity: 1,

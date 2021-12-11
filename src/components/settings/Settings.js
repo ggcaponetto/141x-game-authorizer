@@ -8,7 +8,7 @@ import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import { AppContext, defaultAppContext } from '../../App'
 import { Storage } from "../storage/Storage";
-
+import { getBlockfrostFromContext } from "../util/util";
 const ll = loglevel.getLogger('main');
 
 if (process.env.NODE_ENV === 'production' && !window.logleveldebug) {
@@ -87,15 +87,6 @@ export function Settings() {
   const getAppIdFromContext = () => {
     try {
       return context.settings.appId;
-    } catch (e){
-      ll.debug("could not parse the server setting from the context", context);
-      return null;
-    }
-  }
-
-  const getBlockfrostFromContext = () => {
-    try {
-      return context.settings.blockfrost;
     } catch (e){
       ll.debug("could not parse the server setting from the context", context);
       return null;
@@ -207,7 +198,7 @@ export function Settings() {
       <TextField
         style={{width: "100%"}}
         label={t("settings:blockfrost-mainnet")}
-        value={getBlockfrostFromContext().apikey.mainnet || ""}
+        value={getBlockfrostFromContext(context).apikey.mainnet || ""}
         onChange={(event) => {
           let tempSettings = context.settings;
           tempSettings.blockfrost.apikey.mainnet = event.target.value;
@@ -243,7 +234,7 @@ export function Settings() {
       <TextField
         style={{width: "100%"}}
         label={t("settings:blockfrost-testnet")}
-        value={getBlockfrostFromContext().apikey.testnet || ""}
+        value={getBlockfrostFromContext(context).apikey.testnet || ""}
         onChange={(event) => {
           let tempSettings = context.settings;
           tempSettings.blockfrost.apikey.testnet = event.target.value;
