@@ -44,7 +44,7 @@
   },
   "scripts": {
     "start-server": "cd server && cross-env PORT=5000 npm run start",
-    "start": "craco --max_old_space_size=8192 start",
+    "start": "cross-env PORT=3000 craco --max_old_space_size=8192 start",
     "build": "craco --max_old_space_size=8192 build",
     "test": "craco --max_old_space_size=8192 test",
     "mocha": "mocha --require @babel/register",
