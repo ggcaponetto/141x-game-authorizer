@@ -23,6 +23,15 @@ export default function Wallet(CardanoWasm, BIP39){
   }
   this.CardanoWasm = CardanoWasm;
   this.BIP39 = BIP39;
+  this.getAddressPrefix = function (network){
+    if(network === "mainnet"){
+      return "addr";
+    } else if(network === "testnet") {
+      return "addr_test";
+    } else {
+      throw new Error("unknown network");
+    }
+  }
   this.harden = function harden(num){
     return 0x80000000 + num;
   }
@@ -123,8 +132,8 @@ export default function Wallet(CardanoWasm, BIP39){
           this.CardanoWasm.NetworkInfo[`${options.network}`]().network_id(),
           this.CardanoWasm.StakeCredential.from_keyhash(key_pub.to_raw_key().hash())
         ).to_address();
-        base_address_bech32 = base_address.to_bech32("addr");
-        enterprise_address_bech32 = enterprise_address.to_bech32("addr");
+        base_address_bech32 = base_address.to_bech32(this.getAddressPrefix(options.network));
+        enterprise_address_bech32 = enterprise_address.to_bech32(this.getAddressPrefix(options.network));
         tempAddressData = {
           private: {
             key_prv_bech32,
@@ -299,7 +308,7 @@ export default function Wallet(CardanoWasm, BIP39){
         this.CardanoWasm.StakeCredential.from_keyhash(key_pub.to_raw_key().hash()),
         this.CardanoWasm.StakeCredential.from_keyhash(stake_key_pub.to_raw_key().hash()),
       ).to_address();
-      let reconstructedBaseAddress_bech32 = reconstructedBaseAddress.to_bech32("addr");
+      let reconstructedBaseAddress_bech32 = reconstructedBaseAddress.to_bech32(this.getAddressPrefix(network));
       addressCanBeDerivedFromPublicKeys = reconstructedBaseAddress_bech32 === originatorAddress;
     } else {
       throw new Error("could not verify the message signature. ensure that the public keys include the key_pub_bech32 and stake_key_public_raw_hash keys.");

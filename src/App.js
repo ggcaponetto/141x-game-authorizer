@@ -29,6 +29,9 @@ import packageJson from "./../package.json";
 import { Settings, SettingsLoader } from './components/settings/Settings'
 import { Storage } from "./components/storage/Storage";
 import { getBlockfrostFromContext } from "./components/util/util";
+import mainLogo from'./components/logo/141x-logo.png';
+import Paper from '@mui/material/Paper'
+
 
 const ll = loglevel.getLogger('main');
 let CardanoWasm = null;
@@ -42,14 +45,14 @@ const darkTheme = createTheme({
   palette: {
     type: 'dark',
     primary: {
-      main: '#9575cd',
+      main: '#8d4eff',
     },
     secondary: {
       main: '#c5e1a5',
     },
     background: {
-      default: '#ffffff',
-      paper: '#ffffff',
+      default: '#d2d2d2',
+      paper: '#eeeeee',
     },
     error: {
       main: '#d50000',
@@ -58,7 +61,7 @@ const darkTheme = createTheme({
       main: '#00e676',
     },
     warning: {
-      main: '#fdd835',
+      main: '#ff651f',
     },
     info: {
       main: '#00bcd4',
@@ -190,45 +193,49 @@ function Accounts() {
         <div style={{
           display: "flex", flex: 1, maxWidth: "600px", margin: "0 auto", flexDirection: "column"
         }}>
-          <div className={"new-account"} style={{display: "flex"}}>
-            <TextField
-              label={t("home:seed")}
-              variant="standard"
-              style={{flex: 1, minWidth: "400px"}}
-              value={seed || ''}
-              onChange={(event) => {
-                setSeed(event.target.value)
-              }}
-            />
-            <Divider orientation="vertical" flexItem style={dividerStyle}/>
-            {(()=>{
-              if(context.settings && context.settings.network){
-                return (
-                  <Button onClick={() => {
-                    ll.debug(`creating account/addresses on ${context.settings.network}`, {});
-                    let newAddresses = wallet.current.createAddresses({
-                      network: context.settings.network,
-                      quantity: 1,
-                      seed
-                    });
-                    let newAccounts = wallet.current.getAccounts();
-                    wallet.current.setAccounts(newAccounts);
-                    storage.current.set("accounts", newAccounts);
-                    context.dispatch({
-                      type: defaultAppContext.actions.replace,
-                      payload: {
-                        accounts: newAccounts
-                      }
-                    });
-                    ll.debug("created account/addresses", {
-                      newAddresses,
-                      newAccounts,
-                    });
-                  }}>{t("home:new-game-account")}</Button>
-                )
-              }
-              return null;
-            })()}
+          <div className={"new-account"} style={{display: "flex", flexDirection: "column"}}>
+            <div style={{display: "flex"}}>
+              <TextField
+                label={t("home:seed")}
+                variant="standard"
+                style={{flex: 1}}
+                value={seed || ''}
+                onChange={(event) => {
+                  setSeed(event.target.value)
+                }}
+                multiline
+              />
+            </div>
+            <div style={{display: "flex"}}>
+              {(()=>{
+                if(context.settings && context.settings.network){
+                  return (
+                    <Button style={{width: "100%"}} onClick={() => {
+                      ll.debug(`creating account/addresses on ${context.settings.network}`, {});
+                      let newAddresses = wallet.current.createAddresses({
+                        network: context.settings.network,
+                        quantity: 1,
+                        seed
+                      });
+                      let newAccounts = wallet.current.getAccounts();
+                      wallet.current.setAccounts(newAccounts);
+                      storage.current.set("accounts", newAccounts);
+                      context.dispatch({
+                        type: defaultAppContext.actions.replace,
+                        payload: {
+                          accounts: newAccounts
+                        }
+                      });
+                      ll.debug("created account/addresses", {
+                        newAddresses,
+                        newAccounts,
+                      });
+                    }}>{t("home:new-game-account")}</Button>
+                  )
+                }
+                return null;
+              })()}
+            </div>
           </div>
           <br />
           {(()=>{
@@ -562,13 +569,19 @@ function Navbar (){
       <div style={{
         display: "flex", flex: 1, maxWidth: "600px", margin: "0 auto", flexDirection: "column", alignItems: "center"
       }}>
+        <Paper style={{
+          padding: "15px",
+          marginTop: "15px"
+        }}>
+          <img src={mainLogo} style={{maxWidth: "160px"}}/>
+        </Paper>
         <Typography
           style={{textAlign: "center"}}
-          variant="h4" component="h2"
+          variant="h6" component="h2"
         >
           {t(`home:title`)}
         </Typography>
-        <Typography variant={"body2"}>version {packageJson.version}</Typography>
+        <Typography variant={"body2"}>141x.io - version {packageJson.version}</Typography>
         <ButtonGroup variant="text" aria-label="text button group">
           <Button onClick={() => {
             navigate("/accounts");
@@ -685,7 +698,7 @@ function PageContainer(props){
   return (
     <div
       style={{
-        display: "flex", flex: 1, maxWidth: "600px", margin: "0 auto", flexDirection: "column", alignItems: "center"
+        display: "flex", flex: 1, maxWidth: "600px", margin: "0 auto", flexDirection: "column", alignItems: "center", padding: "10px"
       }}
     >
       <SettingsLoader />
