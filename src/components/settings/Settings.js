@@ -144,7 +144,7 @@ export function Settings() {
             <Button
               onClick={()=>{
                 let tempSettings = context.settings;
-                tempSettings.server = process.env.REACT_APP_SERVER;
+                tempSettings.server = window._env_.REACT_APP_SERVER;
                 if(context.dispatch){
                   storage.current.set("settings", tempSettings);
                   context.dispatch({
@@ -180,7 +180,7 @@ export function Settings() {
             <Button
               onClick={()=>{
                 let tempSettings = context.settings;
-                tempSettings.appId = process.env.REACT_APP_APP_ID;
+                tempSettings.appId = window._env_.REACT_APP_APP_ID;
                 if(context.dispatch){
                   storage.current.set("settings", tempSettings);
                   context.dispatch({
@@ -216,7 +216,7 @@ export function Settings() {
             <Button
               onClick={()=>{
                 let tempSettings = context.settings;
-                tempSettings.blockfrost.apikey.mainnet = process.env.REACT_APP_BLOCKFROST_API_KEY_MAINNET;
+                tempSettings.blockfrost.apikey.mainnet = window._env_.REACT_APP_BLOCKFROST_API_KEY_MAINNET;
                 if(context.dispatch){
                   storage.current.set("settings", tempSettings);
                   context.dispatch({
@@ -252,7 +252,7 @@ export function Settings() {
             <Button
               onClick={()=>{
                 let tempSettings = context.settings;
-                tempSettings.blockfrost.apikey.testnet = process.env.REACT_APP_BLOCKFROST_API_KEY_TESTNET;
+                tempSettings.blockfrost.apikey.testnet = window._env_.REACT_APP_BLOCKFROST_API_KEY_TESTNET;
                 if(context.dispatch){
                   storage.current.set("settings", tempSettings);
                   context.dispatch({

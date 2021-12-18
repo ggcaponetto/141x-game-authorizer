@@ -535,13 +535,13 @@ export const defaultAppContext = {
     }
   },
   settings: {
-    network: process.env.REACT_APP_NETWORK,
-    server: process.env.REACT_APP_SERVER,
-    appId: process.env.REACT_APP_APP_ID,
+    network: window._env_.REACT_APP_NETWORK,
+    server: window._env_.REACT_APP_SERVER,
+    appId: window._env_.REACT_APP_APP_ID,
     blockfrost: {
       apikey: {
-        mainnet: process.env.REACT_APP_BLOCKFROST_API_KEY_MAINNET,
-        testnet: process.env.REACT_APP_BLOCKFROST_API_KEY_TESTNET
+        mainnet: window._env_.REACT_APP_BLOCKFROST_API_KEY_MAINNET,
+        testnet: window._env_.REACT_APP_BLOCKFROST_API_KEY_TESTNET
       }
     },
   },

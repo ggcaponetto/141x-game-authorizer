@@ -1,6 +1,6 @@
 {
   "name": "wallet",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.2",
@@ -19,6 +19,7 @@
     "core-js": "^3.19.1",
     "cra-template": "1.1.2",
     "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
     "i18next": "^21.5.3",
     "loglevel": "^1.8.0",
     "luxon": "^2.0.2",
@@ -43,11 +44,12 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "start-server": "cd server && cross-env PORT=5000 npm run start",
-    "start": "cross-env PORT=3000 craco --max_old_space_size=8192 start",
-    "build": "craco --max_old_space_size=8192 build",
-    "test": "craco --max_old_space_size=8192 test",
-    "mocha": "mocha --require @babel/register",
+    "start-server": "cd server && cross-env PORT=5000 && npm run start",
+    "start": "cross-env PORT=3000 npm run inject-env && craco --max_old_space_size=8192 start",
+    "build": "npm run inject-env && craco --max_old_space_size=8192 build",
+    "test": "npm run inject-env && craco --max_old_space_size=8192 test",
+    "mocha": "npm run inject-env && mocha --require @babel/register",
+    "inject-env": "node --require dotenv/config src/inject-env.js",
     "build-production": "cross-env REACT_APP_BUILD_ENV=production NODE_ENV=production craco --max_old_space_size=8192 build",
     "build-development": "cross-env REACT_APP_BUILD_ENV=development NODE_ENV=development craco --max_old_space_size=8192 build",
     "docker-build-production": "docker build --no-cache -f Dockerfile -t 141x-game-authorizer:latest --build-arg build_env=production .",
