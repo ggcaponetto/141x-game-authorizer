@@ -9,7 +9,9 @@
         "verify-message": "Message that has been signed",
         "verify-signature": "Signature of the message",
         "your-are-signign-with-address": "You are signign the message with",
-        "on-the": "on the"
+        "on-the": "on the",
+        "signature-ok": "The signature is valid",
+        "signature-error": "The signature not is valid"
     },
     "home": {
         "title": "Cardano Game Authorizer",
@@ -19,7 +21,10 @@
         "delete-account": "Delete Account",
         "accordion-title-address": "Address",
         "delete-address": "Delete Address",
-        "unused-address": "Unused Address"
+        "unused-address": "Unused Address",
+        "not-a-valid-seed": "The seed must be a 24 words seed.",
+        "or": "or",
+        "import-wallet": "Import existing wallet"
     },
     "settings": {
         "reset-server": "Reset",

@@ -31,6 +31,7 @@ import { Storage } from "./components/storage/Storage";
 import { getBlockfrostFromContext } from "./components/util/util";
 import mainLogo from'./components/logo/141x-logo.png';
 import Paper from '@mui/material/Paper'
+import Alert from '@mui/material/Alert'
 
 
 const ll = loglevel.getLogger('main');
@@ -183,6 +184,13 @@ function Accounts() {
     initStorage();
   }, [context.accounts])
 
+  const isValidSeed = useCallback(() => {
+    try {
+      return seed.trim().split(" ").length === 24;
+    } catch (e){
+      return false;
+    }
+  }, [seed])
   return (
     <div style={{
       width: "100%"
@@ -206,6 +214,37 @@ function Accounts() {
                 multiline
               />
             </div>
+            {(()=>{
+              if(!isValidSeed()){
+                return (
+                  <Alert severity="info">{t(`home:not-a-valid-seed`)}</Alert>
+                )
+              }
+            })()}
+            <Button style={{width: "100%"}} disabled={!isValidSeed()} onClick={() => {
+              ll.debug(`creating account/addresses on ${context.settings.network}`, {});
+              let newAddresses = wallet.current.createAddresses({
+                network: context.settings.network,
+                quantity: 1,
+                seed
+              });
+              let newAccounts = wallet.current.getAccounts();
+              wallet.current.setAccounts(newAccounts);
+              storage.current.set("accounts", newAccounts);
+              context.dispatch({
+                type: defaultAppContext.actions.replace,
+                payload: {
+                  accounts: newAccounts
+                }
+              });
+              ll.debug("imported account/addresses", {
+                newAddresses,
+                newAccounts,
+              });
+            }}>{t("home:import-wallet")}</Button>
+            <div style={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
+              <Typography>{t("home:or")}</Typography>
+            </div>
             <div style={{display: "flex"}}>
               {(()=>{
                 if(context.settings && context.settings.network){
@@ -215,7 +254,7 @@ function Accounts() {
                       let newAddresses = wallet.current.createAddresses({
                         network: context.settings.network,
                         quantity: 1,
-                        seed
+                        seed: null
                       });
                       let newAccounts = wallet.current.getAccounts();
                       wallet.current.setAccounts(newAccounts);
@@ -365,21 +404,23 @@ function Utilities() {
 
   useEffect(() => {
     let firstAddress = null;
-    Object.keys(context.accounts[context.settings.network]).forEach(seedKey => {
-      Object.keys(context.accounts[context.settings.network][seedKey]).forEach(derivationIndexKey => {
-        let tempAddress = context.accounts[context.settings.network][seedKey][derivationIndexKey].public.base_address_bech32;
-        if(firstAddress === null){
-          firstAddress = tempAddress;
-        }
+    if(context.accounts && context.settings && context.settings.network){
+      Object.keys(context.accounts[context.settings.network]).forEach(seedKey => {
+        Object.keys(context.accounts[context.settings.network][seedKey]).forEach(derivationIndexKey => {
+          let tempAddress = context.accounts[context.settings.network][seedKey][derivationIndexKey].public.base_address_bech32;
+          if(firstAddress === null){
+            firstAddress = tempAddress;
+          }
+        })
       })
-    })
-    setSignAddress(firstAddress)
+      setSignAddress(firstAddress)
+    }
   }, [context.accounts, context.settings.network]);
 
   const getAddressMenuItems = () => {
     let addresses = [];
     let accounts = context.accounts[context.settings.network];
-    if(Object.keys(accounts).length > 0){
+    if(accounts && Object.keys(accounts).length > 0){
       Object.keys(accounts).forEach((seedKey, seedKeyIndex) => {
         Object.keys(accounts[seedKey]).forEach(derivationIndexKey => {
           let address = accounts[seedKey][derivationIndexKey];
@@ -626,6 +667,7 @@ function RouterContainer(props){
   }, [context.accounts])
 
   useEffect(() => {
+    ll.info("recreating the socket connection (settings changed)");
     let tempSocketInstance = new Socket();
     tempSocketInstance.init(context.settings.server);
     let tempSocket = tempSocketInstance.getSocket();
@@ -669,7 +711,7 @@ function RouterContainer(props){
       tempSocket.disconnect();
       tempSocket.close();
     }
-  }, [context.settings.network, context.accounts, context.settings.server, context.settings.appId]);
+  }, [JSON.stringify(context)]);
 
   let getChildren = useCallback(() => {
     if(Array.isArray(props.children)){

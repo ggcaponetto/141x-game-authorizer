@@ -1,1 +1,1 @@
-window._env_ = JSON.parse("{}"); console.log("injected all the env variables into browser context", window._env_);
+window._env_ = JSON.parse("{\"REACT_APP_APP_ID\":\"the-meta\",\"REACT_APP_BLOCKFROST_API_KEY_MAINNET\":\"mainnetBZlO5gTmEra3HQClx0tavfhTs6SffTiI\",\"REACT_APP_BLOCKFROST_API_KEY_TESTNET\":\"testnetiMWOam5dRqf8xr0q0ytNhYCRRDInJRWw\",\"REACT_APP_NETWORK\":\"testnet\",\"REACT_APP_SERVER\":\"http://localhost:5001\"}"); console.log("injected all the env variables into browser context", window._env_);
