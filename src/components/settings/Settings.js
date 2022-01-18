@@ -101,7 +101,7 @@ export function Settings() {
     }}>
       <Typography variant={'h5'}>Settings</Typography>
       <Typography variant={"h6"}>{t(`settings:network`)}</Typography>
-      <br/>
+      <div style={{ marginTop: '10px' }}/>
       <Select
         style={{width: "100%"}}
         value={getNetworkFromContext() || ""}
@@ -122,7 +122,7 @@ export function Settings() {
       >
         {getNetworkOptions()}
       </Select>
-      <br />
+      <div style={{ marginTop: '10px' }}/>
       <TextField
         style={{width: "100%"}}
         label={t("settings:server")}
@@ -158,7 +158,7 @@ export function Settings() {
             >{t(`settings:reset-server`)}</Button>
           )}}
       />
-      <br />
+      <div style={{ marginTop: '10px' }}/>
       <TextField
         style={{width: "100%"}}
         label={t("settings:app-id")}
@@ -194,7 +194,7 @@ export function Settings() {
             >{t(`settings:reset-app-id`)}</Button>
           )}}
       />
-      <br />
+      <div style={{ marginTop: '10px' }}/>
       <TextField
         style={{width: "100%"}}
         label={t("settings:blockfrost-mainnet")}
@@ -230,7 +230,7 @@ export function Settings() {
             >{t(`settings:reset`)}</Button>
           )}}
       />
-      <br />
+      <div style={{ marginTop: '10px' }}/>
       <TextField
         style={{width: "100%"}}
         label={t("settings:blockfrost-testnet")}

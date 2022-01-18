@@ -346,7 +346,7 @@ function Accounts() {
                                 </AccordionSummary>
                                 <AccordionDetails>
                                   <SeedDisplayer seed={seedKey} />
-                                  <br/>
+                                  <div style={{ marginTop: '10px' }}/>
                                   {addressesComponents}
                                 </AccordionDetails>
                               </Accordion>
@@ -449,9 +449,9 @@ function Utilities() {
       flexDirection: "column"
     }}>
       <Typography variant={'h5'}>Utilities</Typography>
-      <br/>
+      <div style={{ marginTop: '10px' }}/>
       <Typography variant={"h5"}>{t(`utilities:sign`)}</Typography>
-      <br/>
+      <div style={{ marginTop: '10px' }}/>
       <Select
         style={{width: "100%"}}
         value={signAddress || ""}
@@ -473,7 +473,7 @@ function Utilities() {
         }
         return null;
       })()}
-      <br/>
+      <div style={{ marginTop: '10px' }}/>
       <TextField
         style={{width: "100%"}}
         label={t("utilities:sign-message")}
@@ -484,7 +484,7 @@ function Utilities() {
         multiline
         rows={4}
       />
-      <br/>
+      <div style={{ marginTop: '10px' }}/>
       <TextField
         style={{width: "100%"}}
         label={t("utilities:sign-signature")}
@@ -496,18 +496,18 @@ function Utilities() {
         multiline
         rows={4}
       />
-      <br/>
+      <div style={{ marginTop: '10px' }}/>
       <Button
         style={{width: "100%"}}
         onClick={()=>{
           sign();
         }}
       >{t("utilities:sign")}</Button>
-      <br/>
+      <div style={{ marginTop: '10px' }}/>
       <Divider />
-      <br/>
+      <div style={{ marginTop: '10px' }}/>
       <Typography variant={"h5"}>{t(`utilities:verify`)}</Typography>
-      <br/>
+      <div style={{ marginTop: '10px' }}/>
       <TextField
         style={{width: "100%"}}
         label={t("utilities:verify-address")}
@@ -516,7 +516,7 @@ function Utilities() {
           setVerifyAddress(event.target.value);
         }}
       />
-      <br/>
+      <div style={{ marginTop: '10px' }}/>
       <TextField
         style={{width: "100%"}}
         label={t("utilities:verify-message")}
@@ -527,7 +527,7 @@ function Utilities() {
         multiline
         rows={4}
       />
-      <br/>
+      <div style={{ marginTop: '10px' }}/>
       <TextField
         style={{width: "100%"}}
         label={t("utilities:verify-signature")}
@@ -538,7 +538,7 @@ function Utilities() {
         multiline
         rows={4}
       />
-      <br/>
+      <div style={{ marginTop: '10px' }}/>
       <div className={"verifies"} style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
         {(()=>{
           if(verifies !== null){
@@ -552,7 +552,7 @@ function Utilities() {
           }
         })()}
       </div>
-      <br/>
+      <div style={{ marginTop: '10px' }}/>
       <Button
         style={{width: "100%"}}
         onClick={()=>{
