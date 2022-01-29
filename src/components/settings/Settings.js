@@ -30,6 +30,7 @@ export function SettingsLoader() {
 
     // get the accounts from the storage
     let tempAccounts = storage.current.get("accounts") || defaultAppContext.accounts;
+    ll.debug("Storage - loading accounts", tempAccounts);
 
     if(
       context.dispatch && hasLoadedSettings === false
@@ -101,7 +102,7 @@ export function Settings() {
     }}>
       <Typography variant={'h5'}>Settings</Typography>
       <Typography variant={"h6"}>{t(`settings:network`)}</Typography>
-      <div style={{ marginTop: '10px' }}/>
+      <span style={{marginTop: "1em"}} />
       <Select
         style={{width: "100%"}}
         value={getNetworkFromContext() || ""}
@@ -122,7 +123,7 @@ export function Settings() {
       >
         {getNetworkOptions()}
       </Select>
-      <div style={{ marginTop: '10px' }}/>
+      <span style={{marginTop: "1em"}} />
       <TextField
         style={{width: "100%"}}
         label={t("settings:server")}
@@ -158,7 +159,7 @@ export function Settings() {
             >{t(`settings:reset-server`)}</Button>
           )}}
       />
-      <div style={{ marginTop: '10px' }}/>
+      <span style={{marginTop: "1em"}} />
       <TextField
         style={{width: "100%"}}
         label={t("settings:app-id")}
@@ -194,7 +195,7 @@ export function Settings() {
             >{t(`settings:reset-app-id`)}</Button>
           )}}
       />
-      <div style={{ marginTop: '10px' }}/>
+      <span style={{marginTop: "1em"}} />
       <TextField
         style={{width: "100%"}}
         label={t("settings:blockfrost-mainnet")}
@@ -230,7 +231,7 @@ export function Settings() {
             >{t(`settings:reset`)}</Button>
           )}}
       />
-      <div style={{ marginTop: '10px' }}/>
+      <span style={{marginTop: "1em"}} />
       <TextField
         style={{width: "100%"}}
         label={t("settings:blockfrost-testnet")}
