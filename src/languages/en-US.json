@@ -31,6 +31,7 @@
         "reset-app-id": "Reset",
         "reset": "Reset",
         "blockfrost-mainnet": "blockfrost mainnet apikey",
-        "blockfrost-testnet": "blockfrost testnet apikey"
+        "blockfrost-testnet": "blockfrost testnet apikey",
+        "authorizer-password": "password"
     }
 }

@@ -674,7 +674,7 @@ function RouterContainer(props){
     // client-side
     tempSocket.on("connect", () => {
       ll.debug("socket: connect", tempSocket.id);
-      tempSocket.emit("set-client-type", { payload: "auth-client" })
+      tempSocket.emit("set-client-type", { payload: { type: "auth-client", password: context.settings.password } })
     });
     tempSocket.on("auth-req", (data, callback) => {
       ll.debug("socket: auth-req", data);
@@ -683,13 +683,32 @@ function RouterContainer(props){
           if(
             wallet.current.hasPrivateKeyOfAddress(context.settings.network, data.headers.address)
             && context.settings.appId === data.headers["app-id"]
+            && context.settings.password === data.headers["password"]
           ){
             let signed = wallet.current.safeSign(context.settings.network, JSON.stringify(data), data.headers.address, context.settings.appId);
             callback({
               data: JSON.stringify(data),
               signed
             })
-          } else if(
+          }
+          else if(
+            !context.settings.password
+            || !data.headers["password"]
+            || context.settings.password.trim() === ""
+            || data.headers["password"].trim() === ""
+          ){
+            ll.debug(`socket: auth-req skip. Ignoring auth request for address ${data.headers.address} because no password has been set in WADAX or MADAX. Got: ${JSON.stringify({
+              data,
+              allowedAppId: context.settings.appId
+            })}`,);
+          }
+          else if(context.settings.password !== data.headers["password"]){
+            ll.debug(`socket: auth-req skip. Ignoring auth request for address ${data.headers.address} because no password do not match. Got: ${JSON.stringify({
+              data,
+              allowedAppId: context.settings.appId
+            })}`,);
+          }
+          else if(
             context.settings.appId !== data.headers["app-id"]
           ){
             ll.debug(`socket: auth-req skip. Ignoring auth request for address ${data.headers.address} because we dont trust the appId. Got: ${JSON.stringify({

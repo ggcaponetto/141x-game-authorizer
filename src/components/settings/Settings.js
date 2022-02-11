@@ -94,6 +94,15 @@ export function Settings() {
     }
   }
 
+  const getAuthorizerPasswordFromContext = () => {
+    try {
+      return context.settings.password;
+    } catch (e){
+      ll.debug("could not parse the server setting from the context", context);
+      return null;
+    }
+  }
+
   return (
     <div style={{
       width: "100%",
@@ -182,6 +191,51 @@ export function Settings() {
               onClick={()=>{
                 let tempSettings = context.settings;
                 tempSettings.appId = window._env_.REACT_APP_APP_ID;
+                if(context.dispatch){
+                  storage.current.set("settings", tempSettings);
+                  context.dispatch({
+                    type: defaultAppContext.actions.replace,
+                    payload: {
+                      settings: tempSettings
+                    }
+                  });
+                }
+              }}
+            >{t(`settings:reset-app-id`)}</Button>
+          )}}
+      />
+      <span style={{marginTop: "1em"}} />
+      <TextField
+        style={{width: "100%"}}
+        label={t("settings:authorizer-password")}
+        value={getAuthorizerPasswordFromContext() || ""}
+        onChange={(event) => {
+          let tempSettings = context.settings;
+          tempSettings.password = event.target.value;
+          if(context.dispatch){
+            storage.current.set("settings", tempSettings);
+            context.dispatch({
+              type: defaultAppContext.actions.replace,
+              payload: {
+                settings: tempSettings
+              }
+            });
+          }
+        }}
+        InputProps={{endAdornment: (
+            <Button
+              onClick={()=>{
+                function generatePassword() {
+                  var length = 32,
+                    charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+%&/()=?!£",
+                    retVal = "";
+                  for (var i = 0, n = charset.length; i < length; ++i) {
+                    retVal += charset.charAt(Math.floor(Math.random() * n));
+                  }
+                  return retVal;
+                }
+                let tempSettings = context.settings;
+                tempSettings.password = generatePassword();
                 if(context.dispatch){
                   storage.current.set("settings", tempSettings);
                   context.dispatch({
