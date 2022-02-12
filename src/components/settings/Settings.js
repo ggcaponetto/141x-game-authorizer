@@ -62,9 +62,18 @@ export function Settings() {
   }, [storage])
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [tempPassword, setTempPassword] = useState("")
+
   useEffect(() => {
     initStorage();
   }, [initStorage])
+
+  useEffect(() => {
+    let password = context.settings.password;
+    if(password){
+      setTempPassword(password);
+    }
+    }, [context.settings.password])
 
   const getNetworkOptions = () => {
     return [
@@ -215,21 +224,10 @@ export function Settings() {
         style={{width: "100%"}}
         label={t("settings:authorizer-password")}
         type={isPasswordVisible ? "text" : "password"}
-        value={getAuthorizerPasswordFromContext() || ""}
+        value={tempPassword || ""}
         onChange={(event) => {
-          if((event.target.value || "").length >= 16){
-            let tempSettings = context.settings;
-            tempSettings.password = event.target.value;
-            if(context.dispatch){
-              storage.current.set("settings", tempSettings);
-              context.dispatch({
-                type: defaultAppContext.actions.replace,
-                payload: {
-                  settings: tempSettings
-                }
-              });
-            }
-          }
+          let value = event.target.value;
+          setTempPassword(value);
         }}
         InputProps={{endAdornment: (
             <div style={{display: "flex", flexDirection: "row"}}>
@@ -239,16 +237,23 @@ export function Settings() {
               <Button
                 onClick={()=>{
                   function generatePassword() {
-                    var length = 32,
+                    let length = 32,
                       charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+%&/()=?!£",
                       retVal = "";
-                    for (var i = 0, n = charset.length; i < length; ++i) {
+                    for (let i = 0, n = charset.length; i < length; ++i) {
                       retVal += charset.charAt(Math.floor(Math.random() * n));
                     }
                     return retVal;
                   }
+                  let newPassword = generatePassword();
+                  setTempPassword(newPassword);
+                }}
+              >{t(`settings:reset-password`)}</Button>
+              <Button
+                disabled={(getAuthorizerPasswordFromContext() === tempPassword) || tempPassword.length < 16}
+                onClick={()=>{
                   let tempSettings = context.settings;
-                  tempSettings.password = generatePassword();
+                  tempSettings.password = tempPassword;
                   if(context.dispatch){
                     storage.current.set("settings", tempSettings);
                     context.dispatch({
@@ -259,12 +264,12 @@ export function Settings() {
                     });
                   }
                 }}
-              >{t(`settings:reset-app-id`)}</Button>
+              >{t(`settings:save-password`)}</Button>
             </div>
           )}}
       />
       {(()=>{
-        if((getAuthorizerPasswordFromContext() || "").length <= 16){
+        if((tempPassword || "").length <= 16){
           return (
             <Alert severity="warning">{t(`settings:use-a-stronger-password`)}</Alert>
           )

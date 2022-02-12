@@ -33,6 +33,8 @@
         "blockfrost-mainnet": "blockfrost mainnet apikey",
         "blockfrost-testnet": "blockfrost testnet apikey",
         "authorizer-password": "password",
+        "reset-password": "Generate",
+        "save-password": "Save",
         "use-a-stronger-password": "The password must be at least 16 characters long."
     }
 }
